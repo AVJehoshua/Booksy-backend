@@ -1,0 +1,22 @@
+{
+  "name": "booksy-backend",
+  "version": "1.0.0",
+  "description": "backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AVJehoshua/Booksy-backend.git"
+  },
+  "author": "Jlawal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AVJehoshua/Booksy-backend/issues"
+  },
+  "homepage": "https://github.com/AVJehoshua/Booksy-backend#readme",
+  "dependencies": {
+    "jest": "^29.7.0"
+  }
+}
