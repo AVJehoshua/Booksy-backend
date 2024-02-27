@@ -1,7 +1,11 @@
 # Booksy-backend
 
 
-### NPM INSTALL mongo / mongoose
+### Steps
 
-1 - Installs all packages for mongodb and mongoose
+```
+npm install
+```
+
+1 - Installs all packages needed for backend
 
