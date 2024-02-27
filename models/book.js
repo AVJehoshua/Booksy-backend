@@ -11,6 +11,6 @@ const BookSchema = new mongoose.Schema({
   category: String,
 });
 
-const Friend = mongoose.model("books", BookSchema);
+const Book = mongoose.model("books", BookSchema);
 
-module.exports = Friend;
+module.exports = Book;
