@@ -50,11 +50,7 @@ app.post("/api", (req, res) => {
     // If successful, the payload will be available from 'evt'
     // If the verification fails, error out and return error code
     try {
-      evt = wh.verify(payload, {
-        "svix-id": svix_id,
-        "svix-timestamp": svix_timestamp,
-        "svix-signature": svix_signature,
-      });
+      evt = wh.verify(payload, headers);
     } catch (err) {
       // Console log and return error
       console.log("Webhook failed to verify. Error:", err.message);
