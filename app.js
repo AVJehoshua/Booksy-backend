@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const { connectToDatabase } = require("./db/db.js");
 require("dotenv").config();
-const { Webhook } = require("svix");
 const User = require("./models/user.js");
 
 const app = express();
@@ -18,7 +17,7 @@ app.use("/users", usersRouter);
 app.use("/books", booksRouter);
 
 app.post("/api", bodyParser.raw({type: 'application/json'}), (req, res) => {
-  console.log("HI")
+    console.log("HI")
     // Check if the 'Signing Secret' from the Clerk Dashboard was correctly provided
     const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
     console.log(WEBHOOK_SECRET)
@@ -50,17 +49,21 @@ app.post("/api", bodyParser.raw({type: 'application/json'}), (req, res) => {
     // If successful, the payload will be available from 'evt'
     // If the verification fails, error out and return error code
     try {
-      evt = wh.verify(payload, headers);
-    } catch (err) {
-      // Console log and return error
-      console.log("Webhook failed to verify. Error:", err.message);
-      res.status(400).json({
-        success: false,
-        message: err.message,
-      });
-      return;
-    }
- 
+        evt = wh.verify(payload, {
+            "svix-id": svix_id,
+            "svix-timestamp": svix_timestamp,
+            "svix-signature": svix_signature,
+        });
+        } catch (err) {
+        // Console log and return error
+        console.log("Webhook failed to verify. Error:", err.message);
+        res.status(400).json({
+            success: false,
+            message: err.message,
+        });
+        return;
+        }
+    
     // Grab the ID and TYPE of the Webhook
     const { id } = evt.data;
     const eventType = evt.type;
