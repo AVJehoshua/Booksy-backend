@@ -4,6 +4,7 @@ const cors = require("cors");
 const { connectToDatabase } = require("./db/db.js");
 require("dotenv").config();
 const Webhook = require("svix");
+const User = require("./models/user.js");
 
 const app = express();
 
@@ -77,15 +78,21 @@ app.post("/api", (req, res) => {
       message: "Webhook received",
     });
 
-    const userData = evt.data 
-    db.saveData(userData)
-    .then(() => {
-      res.status(200).json({ success: true, message: 'User saved successfully' });
-    })
-    .catch((err) => {
-      console.error('Error saving data to database:', err);
-      res.status(500).json({ success: false, message: 'Error saving data to database' });
-    });
+    const first_name = evt.data.first_name;
+    const last_name = evt.date.last_name;
+    const email = evt.data.email_addresses[0];
+
+    const newUser = new User({ first_name, last_name, email});
+    newUser
+        .save()
+        .then((user) => {
+            console.log("User created, id:", user._id.toString());
+            return res.status(201).json({ message: 'User created' });
+            })
+        .catch((err) => {
+            console.error(err);
+            return res.status(400).json({ message: "Something went wrong" });
+            });
 });
 
 
