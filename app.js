@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use("/users", usersRouter);
 app.use("/books", booksRouter);
 
-app.post("/api", (req, res) => {
+app.post("/api", bodyParser.raw({type: 'application/json'}), (req, res) => {
   console.log("HI")
     // Check if the 'Signing Secret' from the Clerk Dashboard was correctly provided
     const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
