@@ -18,7 +18,6 @@ app.use("/users", usersRouter);
 app.use("/books", booksRouter);
 
 app.post("/api", bodyParser.raw({type: 'application/json'}), (req, res) => {
-  console.log("HI")
     // Check if the 'Signing Secret' from the Clerk Dashboard was correctly provided
     const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
     console.log(WEBHOOK_SECRET)
@@ -28,7 +27,7 @@ app.post("/api", bodyParser.raw({type: 'application/json'}), (req, res) => {
 
     // Grab the headers and body
     const headers = req.headers;
-    const payload = req.body;
+    const payload = JSON.stringify(req.body);
     console.log("I am the payload(line32):", payload)
 
     // Get the Svix headers for verification
