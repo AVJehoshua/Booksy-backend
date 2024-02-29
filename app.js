@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const { connectToDatabase } = require("./db/db.js");
 require("dotenv").config();
-const { Webhook } = require("svix");
 const UsersController = require("./controllers/users.js")
 
 const app = express();
