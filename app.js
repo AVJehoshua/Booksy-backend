@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use("/users", usersRouter);
 app.use("/books", booksRouter);
 
-app.post("/api", bodyParser.raw({type: 'application/json'}), (req, res) => {
+app.post("/api", bodyParser.raw({type: 'application/json'}), async (req, res) => {
     // Check if the 'Signing Secret' from the Clerk Dashboard was correctly provided
     const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
     console.log(WEBHOOK_SECRET)
@@ -28,7 +28,6 @@ app.post("/api", bodyParser.raw({type: 'application/json'}), (req, res) => {
     // Grab the headers and body
     const headers = req.headers;
     const payload = JSON.stringify(req.body);
-    console.log("I am the payload(line32):", payload)
 
     // Get the Svix headers for verification
     const svix_id = headers["svix-id"];
@@ -51,7 +50,6 @@ app.post("/api", bodyParser.raw({type: 'application/json'}), (req, res) => {
     // If the verification fails, error out and return error code
     try {
       evt = wh.verify(payload, headers);
-      console.log("I am the payload(like 55):", payload)
     } catch (err) {
       // Console log and return error
       console.log("Webhook failed to verify. Error:", err.message);
@@ -61,15 +59,15 @@ app.post("/api", bodyParser.raw({type: 'application/json'}), (req, res) => {
       });
       return;
     }
- 
+
     // Grab the ID and TYPE of the Webhook
     const { id } = evt.data;
     const eventType = evt.type;
- 
+
     console.log(`Webhook with an ID of ${id} and type of ${eventType}`);
     // Console log the full payload to view
     console.log("Webhook body:", evt.data);
- 
+
     res.status(200).json({
       success: true,
       message: "Webhook received",
@@ -81,8 +79,8 @@ app.post("/api", bodyParser.raw({type: 'application/json'}), (req, res) => {
     const last_name = evt.data.last_name;
     const email = evt.data.email_addresses[0].email_address;
 
-    const newUser = new User({ first_name, last_name, email});
-    newUser
+    const newUser = new User({ first_name, last_name, email });
+    await newUser
         .save()
         .then((user) => {
             console.log("User created, id:", user._id.toString());
