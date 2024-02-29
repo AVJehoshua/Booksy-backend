@@ -78,4 +78,7 @@ async function welcomeEmail() {
   console.log("Message sent: %s", info.messageId);
 }
 
+// Run the below to test the email: 
+// welcomeEmail().catch(console.error);
+
 module.exports = welcomeEmail;
