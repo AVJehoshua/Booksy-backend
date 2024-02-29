@@ -78,7 +78,7 @@ app.post("/api", bodyParser.raw({type: 'application/json'}), (req, res) => {
     console.log("I am evt data:", evt.data)
 
     const first_name = evt.data.first_name;
-    const last_name = evt.date.last_name;
+    const last_name = evt.data.last_name;
     const email = evt.data.email_addresses[0];
 
     const newUser = new User({ first_name, last_name, email});
