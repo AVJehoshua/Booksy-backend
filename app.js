@@ -9,12 +9,15 @@ const app = express();
 
 const usersRouter = require("./routes/users");
 const booksRouter = require("./routes/books");
+const basketRouter = require("./routes/basket");
+
 
 app.use(cors());
 app.use(bodyParser.json());
 
 app.use("/users", usersRouter);
 app.use("/books", booksRouter);
+app.use("/basket", basketRouter);
 
 app.post("/api", bodyParser.raw({type: 'application/json'}), (req, res) => {
     console.log("HI")

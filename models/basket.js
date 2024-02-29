@@ -1,27 +1,35 @@
 const mongoose = require("mongoose");
 
-const BasketItemSchema = new mongoose.Schema({
-    productId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Book",
-        required: true,
-    },
-    quantity: {
-        type: Number,
-        required: true,
-        default: 1,
-    },
-    });
 
-    const BasketSchema = new mongoose.Schema({
-    userId: {
+const BasketItemSchema = new mongoose.Schema({
+    
+    // quantity: {
+    //     type: Number,
+    //     required: true,
+    //     default: 1,
+    // },
+
+    items: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Book"
+    },
+
+    user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true,
+        },
+
+    email: {
+        type: String,
     },
-    items: [BasketItemSchema],
+
+    // order_completed: {
+    //     type: Boolean,
+    //     default: false,
+    // },
+
     });
 
-const Basket = mongoose.model("Basket", BasketSchema);
+    const Basket = mongoose.model("Basket", BasketItemSchema);
 
-module.exports = Basket;
+    module.exports = Basket

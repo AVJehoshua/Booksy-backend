@@ -1,16 +1,18 @@
 // basket.controller.js
 
+const mongoose = require("mongoose");
 const Basket = require("../models/basket");
 
 // Function to add an item to the basket
 const addItemToBasket = async (req, res) => {
-    const userId = req.params.userId;
-    const itemDetails = req.body; // Assuming the request body contains item details
+    const userId = new mongoose.Types.ObjectId(req.params.userId)
+    console.log(userId)
+    const itemDetails = new mongoose.Types.ObjectId(req.body.item) // Assuming the request body contains item details
     try {
         // Find the user's basket or create a new one if it doesn't exist
-        let basket = await Basket.findOne({ user: userId });
+        let basket = await Basket.findOne({ user_id: userId });
         if (!basket) {
-            basket = new Basket({ user: userId, items: [] });
+            basket = new Basket({ user_id: userId, items: [] });
         }
 
         // Add the item to the basket
@@ -75,6 +77,7 @@ const removeItemFromBasket = async (req, res) => {
 
 // Function to get the contents of the user's basket
 const getBasket = async (req, res) => {
+    console.log("getBasket")
     const userId = req.params.userId;
     try {
         // Find the user's basket
