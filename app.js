@@ -29,6 +29,7 @@ app.post("/api", bodyParser.raw({type: 'application/json'}), (req, res) => {
     // Grab the headers and body
     const headers = req.headers;
     const payload = req.body;
+    console.log("I am the payload(line32):", payload)
 
     // Get the Svix headers for verification
     const svix_id = headers["svix-id"];
@@ -51,6 +52,7 @@ app.post("/api", bodyParser.raw({type: 'application/json'}), (req, res) => {
     // If the verification fails, error out and return error code
     try {
       evt = wh.verify(payload, headers);
+      console.log("I am the payload(like 55):", payload)
     } catch (err) {
       // Console log and return error
       console.log("Webhook failed to verify. Error:", err.message);
