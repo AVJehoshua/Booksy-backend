@@ -58,10 +58,11 @@ const create = async (req, res) => {
     });
 
     const first_name = evt.data.first_name;
-    const last_name = evt.date.last_name;
+    const last_name = evt.data.last_name;
     const email = evt.data.email_addresses[0];
+    const user_id = evt.id;
 
-    const newUser = new User({ first_name, last_name, email});
+    const newUser = new User({ first_name, last_name, email, user_id});
     newUser
         .save()
         .then((user) => {
