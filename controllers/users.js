@@ -23,6 +23,7 @@ async function create(evt) {
     }
 }
 
+// function updates saved_items list when a book is liked 
 const updateUserLikedList = async (req, res) =>  { 
     const bookId = req.body.bookId;
     const user_id = req.body.user_id;
@@ -45,10 +46,33 @@ const updateUserLikedList = async (req, res) =>  {
     }
 };
 
+// function checks if book is liked when user navigates to a book page
+const checkLikedBook = async (req, res) => {
+
+    const bookId = req.body.bookId;
+    const user_id = req.body.user_id;
+
+    const user = await User.findOne(user_id)
+
+    if (!user) {
+        return res.status(404).json({ message: "Unable to find user by user_id"})
+    }; 
+    
+    if (user.saved_items.includes(bookId)) {
+        return res.status(200).json({ true: true, message: "Book is liked"})
+    }
+    else {
+        return res.status(404).json({ false: false, message: "Book is not liked"})
+    }
+    
+}
+
 
 const UsersController = {
     create: create,
-    updateUserLikedList: updateUserLikedList
+    updateUserLikedList: updateUserLikedList,
+    checkLikedBook: checkLikedBook,
+    
 };
 
 module.exports = UsersController;
