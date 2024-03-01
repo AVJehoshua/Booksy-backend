@@ -30,7 +30,7 @@ describe('checkLikedBook', () => {
         await checkLikedBook(req, res);
 
         expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.json).toHaveBeenCalledWith({ true: true, message: "Book is liked" });
+        expect(res.json).toHaveBeenCalledWith({ state: true, message: "Book is liked" });
     });
 
     it('should return 404 if user does not exist', async () => {
@@ -51,7 +51,7 @@ describe('checkLikedBook', () => {
         await checkLikedBook(req, res);
 
         expect(res.status).toHaveBeenCalledWith(404);
-        expect(res.json).toHaveBeenCalledWith({ false: false, message: "Book is not liked" });
+        expect(res.json).toHaveBeenCalledWith({ state: false, message: "Book is not liked" });
     });
 
     // Add more test cases as needed
