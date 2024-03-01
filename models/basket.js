@@ -1,35 +1,21 @@
+
 const mongoose = require("mongoose");
 
-
 const BasketItemSchema = new mongoose.Schema({
-    
-    // quantity: {
-    //     type: Number,
-    //     required: true,
-    //     default: 1,
-    // },
-
-    items: {
+    items: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Book"
-    },
-
+        ref: "books"
+    }],
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        },
-
-    email: {
-        type: String,
+        required: true
     },
+    email: {
+        type: String
+    }
+});
 
-    // order_completed: {
-    //     type: Boolean,
-    //     default: false,
-    // },
+const Basket = mongoose.model("Basket", BasketItemSchema);
 
-    });
-
-    const Basket = mongoose.model("Basket", BasketItemSchema);
-
-    module.exports = Basket
+module.exports = Basket;

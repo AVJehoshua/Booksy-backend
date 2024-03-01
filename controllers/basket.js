@@ -77,11 +77,12 @@ const removeItemFromBasket = async (req, res) => {
 
 // Function to get the contents of the user's basket
 const getBasket = async (req, res) => {
-    console.log("getBasket")
+    
     const userId = req.params.userId;
     try {
         // Find the user's basket
-        const basket = await Basket.findOne({ user: userId });
+        const basket = await Basket.findOne({ user_id: userId }).populate('items');
+
         if (!basket) {
             return res.status(404).json({ message: 'Basket not found' });
         }
