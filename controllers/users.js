@@ -22,8 +22,33 @@ async function create(evt) {
             return res.status(400).json({ message: "Something went wrong" })
     }
 }
+
+const updateUserLikedList = async (req, res) =>  { 
+    const bookId = req.body.bookId;
+    const user_id = req.body.user_id;
+    const status = req.body.status; 
+
+    const user = await User.findOne(user_id)
+
+    if (!user) {
+        return res.status(404).json({ message: "Unable to find user by user_id"})
+    }; 
+    
+    if (user.saved_items.includes(bookId) && status === "unlike") {
+        user.saved_items = user.saved_items.filter(id => id !== bookId)
+    }
+    else if (user.saved_items.includes(bookId) && status === "like") {
+        user.saved_items 
+    }
+    else if (!user.saved_items.includes(bookId) && status === "like") {
+        user.saved_items.push(bookId)
+    }
+};
+
+
 const UsersController = {
-    create: create
+    create: create,
+    updateUserLikedList: updateUserLikedList
 };
 
 module.exports = UsersController;
