@@ -63,7 +63,7 @@ const create = async (req, res) => {
     const user_id = evt.id;
 
     const newUser = new User({ first_name, last_name, email, user_id});
-    newUser
+    await newUser
         .save()
         .then((user) => {
             console.log("User created, id:", user._id.toString());
