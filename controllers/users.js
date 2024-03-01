@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const welcomeEmail = require("./../email/mailer");
+require("dotenv").config();
 
 const create = async (req, res) => {
     // Check if the 'Signing Secret' from the Clerk Dashboard was correctly provided
