@@ -19,10 +19,25 @@ const create = async (req, res) => {
 }
 
 
+const getUserById = async (req, res) => {
+    const userId = req.params.user_id;
 
-const UsersController = {
-    create: create
+    User.findById(userId)
+        .then((user) => {
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            res.json(user); // Sends all user details back
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).json({ message: "Error retrieving user details" });
+        });
 };
 
+const UsersController = {
+    create,
+    getUserById
+};
 
 module.exports = UsersController;
