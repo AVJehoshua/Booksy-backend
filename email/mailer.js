@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // This is the function to send our email email. This can be expanded below to add as many emails as needed
-async function welcomeEmail() {
+async function welcomeEmail(email) {
   // send mail with defined transport object
   let info = await transporter.sendMail({
     from: '"Booksy" ilhanabdalle@gmail.com', // sender address
@@ -78,7 +78,7 @@ async function welcomeEmail() {
   console.log("Message sent: %s", info.messageId);
 }
 
-// Run the below to test the email: 
 // welcomeEmail().catch(console.error);
 
 module.exports = welcomeEmail;
+

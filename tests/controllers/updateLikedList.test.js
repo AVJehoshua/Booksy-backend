@@ -1,8 +1,8 @@
-const { updateUserLikedList } = require('../controllers/users');
-const User = require('../models/user');
+const { updateUserLikedList } = require('../../controllers/users');
+const User = require('../../models/user');
 
 
-jest.mock('./../models/user', () => ({
+jest.mock('../../models/user', () => ({
     findOne: jest.fn()
 }));
 
@@ -31,7 +31,7 @@ describe('updateUserLikedList when status = "like', () => {
 
         await updateUserLikedList(req, res);
 
-        expect(user.saved_items).toEqual(expect.arrayContaining(['someBookId']));
+        expect(user.saved_items).toEqual(expect.arrayContaining(['someBookId', 'existingBookId']));
     });
 
     it('should return the same list when same bookId is added', async () => {
@@ -108,5 +108,4 @@ describe('updateUserLikedList when status = "unlike', () => {
         expect(res.json).toHaveBeenCalledWith({ message: 'Unable to find user by user_id' });
     });
 
-    // Add more test cases as needed
 });
