@@ -79,6 +79,8 @@ const create = async (req, res) => {
 };
 
 
+
+
 // function updates saved_items list when a book is liked 
 const updateUserLikedList = async (req, res) =>  { 
     console.log(req.body)
@@ -134,11 +136,32 @@ const checkLikedBook = async (req, res) => {
     
 }
 
+
+const getUserById = async (req, res) => {
+    const userId = req.params.user_id;
+    console.log("[getUserById] Attempting to fetch user with user_id:", userId);
+
+    try {
+        const user = await User.findOne({ user_id: userId });
+        console.log("[getUserById] { user_id: userId }:", { user_id: userId });
+        // console.log( typeof userId );
+        if (!user) {
+            // console.log("[getUserById] User not found with user_id:", userId);
+            return res.status(404).json({ message: 'User not found' });
+        }
+        // console.log("[getUserById] User found:", user); // Be cautious of logging sensitive info
+        res.json(user);
+    } catch (err) {
+        // console.error("[getUserById] Error retrieving user details for user_id:", userId, err);
+        res.status(500).json({ message: "Error retrieving user details", error: err.message });
+    }
+};
+
 const UsersController = {
     create: create,
+    getUserById: getUserById,
     updateUserLikedList: updateUserLikedList,
     checkLikedBook: checkLikedBook,
-    
 };
 
 module.exports = UsersController;
