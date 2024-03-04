@@ -69,7 +69,7 @@ const create = async (req, res) => {
         .save()
         .then((user) => {
             console.log("User created, id:", user._id.toString());
-            welcomeEmail(email)
+            welcomeEmail(email).catch(console.error)
             return res.status(201).json({ message: 'User created' });
             })
         .catch((err) => {
@@ -86,36 +86,40 @@ const updateUserLikedList = async (req, res) =>  {
     const user_id = req.body.user_id;
     const status = req.body.status; 
 
-    const user = await User.findOne({ user_id: user_id })
+    try {
+        const user = await User.findOne({ user_id: user_id })
 
-    if (!user) {
-        return res.status(404).json({ message: "Unable to find user by user_id"})
-    }; 
-    
-    if (user.saved_items.includes(bookId) && status === "unlike") {
-        user.saved_items = user.saved_items.filter(id => id !== bookId)
-    }
-    else if (user.saved_items.includes(bookId) && status === "like") {
-        user.saved_items 
-    }
-    else if (!user.saved_items.includes(bookId) && status === "like") {
-        user.saved_items.push(bookId)
-    }
+        if (!user) {
+            return res.status(404).json({ message: "Unable to find user by user_id"})
+        }; 
+        
+        if (user.saved_items.includes(bookId) && status === "unlike") {
+            user.saved_items = user.saved_items.filter(id => id !== bookId)
+        }
+        else if (user.saved_items.includes(bookId) && status === "like") {
+            user.saved_items 
+        }
+        else if (!user.saved_items.includes(bookId) && status === "like") {
+            user.saved_items.push(bookId)
+        }
+        
+        await user.save();
+        console.log(user.saved_items)
 
-    await user.save();
-    console.log(user.saved_items)
+        return res.status(200).json({ message: "User updated successfully" });
+        } catch (err) {
+            console.error(err);
+            return res.status(400).json({ message: "User not updated" });
+    };
 };
 
 // function checks if book is liked when user navigates to a book page
 const checkLikedBook = async (req, res) => {
-    console.log("I am the checkLiked:", req.query)
 
     const bookId = req.query.bookId;
     const user_id = req.query.user_id;
-    console.log("I am the user_id", user_id)
 
     const user = await User.findOne({ user_id: user_id })
-    console.log("I am the user:", user)
 
     if (!user) {
         return res.status(404).json({ message: "Unable to find user by user_id"})

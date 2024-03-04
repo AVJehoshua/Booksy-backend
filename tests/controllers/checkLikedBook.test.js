@@ -10,7 +10,7 @@ describe('checkLikedBook', () => {
 
     beforeEach(() => {
         req = {
-            body: {
+            query: {
                 bookId: 'someBookId',
                 user_id: 'someUserId'
             }
@@ -50,7 +50,7 @@ describe('checkLikedBook', () => {
 
         await checkLikedBook(req, res);
 
-        expect(res.status).toHaveBeenCalledWith(404);
+        expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({ state: false, message: "Book is not liked" });
     });
 
