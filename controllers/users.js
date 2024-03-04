@@ -128,25 +128,29 @@ const checkLikedBook = async (req, res) => {
 
 const getUserById = async (req, res) => {
     const userId = req.params.user_id;
+    console.log("[getUserById] Attempting to fetch user with user_id:", userId);
 
-    User.findById(userId)
-        .then((user) => {
-            if (!user) {
-                return res.status(404).json({ message: 'User not found' });
-            }
-            res.json(user); // Sends all user details back
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).json({ message: "Error retrieving user details" });
-        });
+    try {
+        const user = await User.findOne({ user_id: userId });
+        console.log("[getUserById] { user_id: userId }:", { user_id: userId });
+        // console.log( typeof userId );
+        if (!user) {
+            // console.log("[getUserById] User not found with user_id:", userId);
+            return res.status(404).json({ message: 'User not found' });
+        }
+        // console.log("[getUserById] User found:", user); // Be cautious of logging sensitive info
+        res.json(user);
+    } catch (err) {
+        // console.error("[getUserById] Error retrieving user details for user_id:", userId, err);
+        res.status(500).json({ message: "Error retrieving user details", error: err.message });
+    }
 };
 
 const UsersController = {
-    create,
-    getUserById,
-    updateUserLikedList,
-    checkLikedBook,
+    create: create,
+    getUserById: getUserById,
+    updateUserLikedList: updateUserLikedList,
+    checkLikedBook: checkLikedBook,
 };
 
 module.exports = UsersController;
