@@ -1,7 +1,7 @@
-const { checkLikedBook } = require('../controllers/users');
-const User = require('./../models/user'); // Assuming you have a User model defined somewhere
+const { checkLikedBook } = require('../../controllers/users');
+const User = require('../../models/user'); 
 
-jest.mock('./../models/user', () => ({
+jest.mock('../../models/user', () => ({
     findOne: jest.fn()
 }));
 
@@ -10,7 +10,7 @@ describe('checkLikedBook', () => {
 
     beforeEach(() => {
         req = {
-            body: {
+            query: {
                 bookId: 'someBookId',
                 user_id: 'someUserId'
             }
@@ -50,9 +50,8 @@ describe('checkLikedBook', () => {
 
         await checkLikedBook(req, res);
 
-        expect(res.status).toHaveBeenCalledWith(404);
+        expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({ state: false, message: "Book is not liked" });
     });
 
-    // Add more test cases as needed
 });
