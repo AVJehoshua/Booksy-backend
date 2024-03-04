@@ -5,11 +5,14 @@ const { connectToDatabase } = require("./db/db.js");
 require("dotenv").config();
 const User = require("./models/user.js");
 
+
 const app = express();
 
 const usersRouter = require("./routes/users");
 const booksRouter = require("./routes/books");
 const basketRouter = require("./routes/basket");
+const orderRoutes = require("./routes/order.js");
+const stripeRoutes = require("./routes/stripe.js");
 
 
 app.use(cors());
@@ -18,6 +21,10 @@ app.use(bodyParser.json());
 app.use("/users", usersRouter);
 app.use("/books", booksRouter);
 app.use("/basket", basketRouter);
+app.use("/order", orderRoutes);
+app.use("/stripe", stripeRoutes);
+
+
 
 app.post("/api", bodyParser.raw({type: 'application/json'}), (req, res) => {
     console.log("HI")
