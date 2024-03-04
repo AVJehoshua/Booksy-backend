@@ -1,7 +1,7 @@
-const { checkLikedBook } = require('../controllers/users');
-const User = require('./../models/user'); // Assuming you have a User model defined somewhere
+const { checkLikedBook } = require('../../controllers/users');
+const User = require('../../models/user'); 
 
-jest.mock('./../models/user', () => ({
+jest.mock('../../models/user', () => ({
     findOne: jest.fn()
 }));
 
@@ -54,5 +54,4 @@ describe('checkLikedBook', () => {
         expect(res.json).toHaveBeenCalledWith({ state: false, message: "Book is not liked" });
     });
 
-    // Add more test cases as needed
 });

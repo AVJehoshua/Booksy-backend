@@ -69,7 +69,7 @@ const create = async (req, res) => {
         .save()
         .then((user) => {
             console.log("User created, id:", user._id.toString());
-            welcomeEmail()
+            welcomeEmail(email)
             return res.status(201).json({ message: 'User created' });
             })
         .catch((err) => {
@@ -81,11 +81,12 @@ const create = async (req, res) => {
 
 // function updates saved_items list when a book is liked 
 const updateUserLikedList = async (req, res) =>  { 
+    console.log(req.body)
     const bookId = req.body.bookId;
     const user_id = req.body.user_id;
     const status = req.body.status; 
 
-    const user = await User.findOne(user_id)
+    const user = await User.findOne({ user_id: user_id })
 
     if (!user) {
         return res.status(404).json({ message: "Unable to find user by user_id"})
@@ -100,16 +101,21 @@ const updateUserLikedList = async (req, res) =>  {
     else if (!user.saved_items.includes(bookId) && status === "like") {
         user.saved_items.push(bookId)
     }
-};
 
+    await user.save();
+    console.log(user.saved_items)
+};
 
 // function checks if book is liked when user navigates to a book page
 const checkLikedBook = async (req, res) => {
+    console.log("I am the checkLiked:", req.query)
 
-    const bookId = req.body.bookId;
-    const user_id = req.body.user_id;
+    const bookId = req.query.bookId;
+    const user_id = req.query.user_id;
+    console.log("I am the user_id", user_id)
 
-    const user = await User.findOne(user_id)
+    const user = await User.findOne({ user_id: user_id })
+    console.log("I am the user:", user)
 
     if (!user) {
         return res.status(404).json({ message: "Unable to find user by user_id"})
@@ -119,11 +125,10 @@ const checkLikedBook = async (req, res) => {
         return res.status(200).json({ state: true, message: "Book is liked"})
     }
     else {
-        return res.status(404).json({ state: false, message: "Book is not liked"})
+        return res.status(200).json({ state: false, message: "Book is not liked"})
     }
     
 }
-
 
 const UsersController = {
     create: create,
