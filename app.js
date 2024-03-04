@@ -8,12 +8,16 @@ const app = express();
 
 const usersRouter = require("./routes/users");
 const booksRouter = require("./routes/books");
+const basketRouter = require("./routes/basket");
+
 
 app.use(cors());
 app.use(bodyParser.json());
 
 app.use("/users", usersRouter);
+app.use("/api", usersRouter);
 app.use("/books", booksRouter);
+app.use("/basket", basketRouter);
 
 const listenForRequests = () => {
     const port = process.env.PORT || 3000;
