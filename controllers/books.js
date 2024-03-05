@@ -54,6 +54,8 @@ const getBooksBySearch = async (req, res) => {
 
             {author: { $regex: req.params.searchQuery, $options: 'i' }},
             {title: { $regex: req.params.searchQuery, $options: 'i' }},
+            {ISBN_10: { $regex: req.params.searchQuery, $options: 'i' }},
+            {ISBN_13: { $regex: req.params.searchQuery, $options: 'i' }},
         ]})
 
         res.status(200).json({
