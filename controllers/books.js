@@ -48,9 +48,8 @@ const getBooksByCategories = async (req, res) => {
 const getBooksBySearch = async (req, res) => {
     
     if (req.params.searchQuery !== " ")
-    console.log("backend author :", req.params.author)
     try {
-        const authorBookResults = await Book.find({ $or: [
+        const searchBookResults = await Book.find({ $or: [
 
             {author: { $regex: req.params.searchQuery, $options: 'i' }},
             {title: { $regex: req.params.searchQuery, $options: 'i' }},
@@ -59,10 +58,10 @@ const getBooksBySearch = async (req, res) => {
         ]})
 
         res.status(200).json({
-            message: `Fetched books with titles: ${authorBookResults}`,
-            book: authorBookResults
+            message: `Fetched books with titles: ${searchBookResults}`,
+            book: searchBookResults
         }); 
-        console.log(`backend author response sent: ${authorBookResults}`)
+        console.log(`backend search response sent: ${searchBookResults}`)
     } catch (error) {
         console.error('Error fetching books by author:', error);
         res.status(500).json({ error: 'Internal server error' }); 
