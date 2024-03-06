@@ -7,7 +7,7 @@ const BasketItemSchema = new mongoose.Schema({
         ref: "books"
     }],
     user_id: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: "User",
         required: true
     },
