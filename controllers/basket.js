@@ -7,7 +7,6 @@ const Basket = require("../models/basket");
 const addItemToBasket = async (req, res) => {
     const userId = req.params.userId;
     console.log("backend:", userId)
-
     
     const itemDetails =req.body.item // Assuming the request body contains item details
     try {
