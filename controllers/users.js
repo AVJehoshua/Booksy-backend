@@ -157,11 +157,39 @@ const getUserById = async (req, res) => {
     }
 };
 
+
+const updateUser = async (req, res) => {
+    const userId = req.params.user_id;
+    const updateData = req.body; 
+
+    console.log("[updateUser] Attempting to update user with user_id:", userId);
+    try {
+        // Find the user and update their details
+        // new: true returns the updated document
+        const updatedUser = await User.findOneAndUpdate(
+            { user_id: userId },
+            updateData,
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        console.log("[updateUser] User updated successfully:", updatedUser);
+        res.json(updatedUser); // Send back the updated user details
+    } catch (err) {
+        console.error("[updateUser] Error updating user details:", err);
+        res.status(500).json({ message: "Error updating user details", error: err.message });
+    }
+};
+
 const UsersController = {
     create: create,
     getUserById: getUserById,
     updateUserLikedList: updateUserLikedList,
     checkLikedBook: checkLikedBook,
+    updateUser: updateUser,
 };
 
 module.exports = UsersController;
