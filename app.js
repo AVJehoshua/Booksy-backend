@@ -11,8 +11,8 @@ const app = express();
 const usersRouter = require("./routes/users");
 const booksRouter = require("./routes/books");
 const basketRouter = require("./routes/basket");
-const orderRoutes = require("./routes/order.js");
-const stripeRoutes = require("./routes/stripe.js");
+const orderRoutes = require("./routes/order");
+const stripeRoutes = require("./routes/stripe");
 
 
 app.use(cors());
