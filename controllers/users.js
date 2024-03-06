@@ -139,11 +139,11 @@ const checkLikedBook = async (req, res) => {
 
 const getUserById = async (req, res) => {
     const userId = req.params.user_id;
-    console.log("[getUserById] Attempting to fetch user with user_id:", userId);
+    // console.log("[getUserById] Attempting to fetch user with user_id:", userId);
 
     try {
         const user = await User.findOne({ user_id: userId });
-        console.log("[getUserById] { user_id: userId }:", { user_id: userId });
+        // console.log("[getUserById] { user_id: userId }:", { user_id: userId });
         // console.log( typeof userId );
         if (!user) {
             // console.log("[getUserById] User not found with user_id:", userId);
@@ -157,11 +157,41 @@ const getUserById = async (req, res) => {
     }
 };
 
+
+const updateUser = async (req, res) => {
+    const { user_id } = req.params; // Getting user_id from URL parameters
+    const { address } = req.body; // Assuming address details are sent in the body
+    console.log("[updateUser] Attempting to update user with user_id:", user_id);
+    console.log("[updateUser] Attempting to update user with address:", address);
+
+    // Convert the address object into a string format
+    const addressString = `Address Line 1: ${address.addressLine1}, Address Line 2: ${address.addressLine2}, Town or City: ${address.townOrCity}, Postcode: ${address.postcode}`;
+
+    try {
+        const updatedUser = await User.findOneAndUpdate(
+            { user_id: user_id },
+            { $set: { address: addressString } },
+            { new: true } // Return the updated document
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.json(updatedUser);
+    } catch (error) {
+        console.log("[updateUser] Error updating user details:", error);
+        res.status(500).json({ message: "Error updating user details", error: error.message });
+    }
+};
+
+
 const UsersController = {
     create: create,
     getUserById: getUserById,
     updateUserLikedList: updateUserLikedList,
     checkLikedBook: checkLikedBook,
+    updateUser: updateUser,
 };
 
 module.exports = UsersController;
