@@ -7,4 +7,8 @@ const config = {
   maxWorkers: 1, // Make sure our tests run one after another
 };
 
+{
+  "preset"; "@shelf/jest-mongodb"
+}
+
 module.exports = config;

@@ -1,6 +1,27 @@
-// const supertest = require('supertest');
-// const app = require('../app'); // Import your Express app
-// const request = supertest(app);
+const supertest = require('supertest');
+const app = require('../app'); // Import your Express app
+const request = supertest(app);
+// require("../mongodb_helper");
+const User = require("../models/user");
+
+describe("User model", () => {
+    beforeEach(async () => {
+        await User.deleteMany({});
+    });
+
+
+    it('has a first name', () => {
+        const user = new User({
+            first_name: "Test user",
+        });
+        expect(user.first_name).toEqual("Test user");
+    });
+
+})
+
+
+
+
 
 // describe('GET /users/:user_id', () => {
 //     it('should return a user for a valid user_id', async () => {

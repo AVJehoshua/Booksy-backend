@@ -5,6 +5,8 @@ require("dotenv").config()
 const connectToDatabase = async () => {
     const mongoDbUrl = process.env.MONGODB_URL;
 
+    const testMongoDbUrl = process.env.MONGODB_TEST_URL;
+
     if (!mongoDbUrl) {
         console.error(
         "No MongoDB url provided. Make sure there is a MONGODB_URL environment variable set. See the README for more details."
