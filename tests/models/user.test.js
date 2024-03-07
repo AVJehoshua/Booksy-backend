@@ -1,7 +1,7 @@
 const supertest = require('supertest');
-const app = require('../app'); // Import your Express app
+const app = require('../../app'); // Import your Express app
 const request = supertest(app);
-const User = require("../models/user");
+const User = require("../../models/user");
 
 describe("User model", () => {
     beforeEach(async () => {

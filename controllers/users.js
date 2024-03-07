@@ -145,10 +145,7 @@ const getUserById = async (req, res) => {
         const user = await User.findOne({ user_id: userId });
         console.log("[getUserById] { user_id: userId }:", { user_id: userId });
         if (user) {
-            return res.status(200).json({
-                path: 'user_id',
-                message: userId
-            })
+            res.status(200)
         }
         // console.log( typeof userId );
         if (!user) {
