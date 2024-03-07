@@ -15,7 +15,7 @@ exports.createOrder = async (req, res) => {
                 order: returnOrder,
             });
         } else {
-            const currentBasket = await Basket.findOne({ user_id: user_id });
+            let currentBasket = await Basket.findOne({ user_id: user_id });
 
             const orderItems = [];
             currentBasket.items.forEach((book) => {
@@ -38,8 +38,16 @@ exports.createOrder = async (req, res) => {
             } catch (error) {
                 console.error(error);
             }
+
+            try {
+                await Basket.findByIdAndDelete(currentBasket._id);
+                console.log("Basket deleted:", currentBasket._id);
+            } catch (error) {
+                console.error("Error deleting Basket:", error);
+            }
         }
     } catch (error) {
         console.error(error);
     }
+
 };
