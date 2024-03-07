@@ -42,8 +42,8 @@ router.post("/create-checkout-session", async (req, res) => {
                 },
             ],
             mode: "payment",
-            success_url: `http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `http://localhost:5173/cancel`,
+            success_url: `http://boooksy.netlify.app/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `http://boooksy.netlify.app/cancel`,
         });
 
         // Return the session ID to the frontend
