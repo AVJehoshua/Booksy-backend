@@ -2,7 +2,7 @@ const { updateUserLikedList } = require('../../../controllers/users');
 const User = require('../../../models/user');
 
 
-jest.mock('../../models/user', () => ({
+jest.mock('../../../models/user', () => ({
     findOne: jest.fn()
 }));
 
